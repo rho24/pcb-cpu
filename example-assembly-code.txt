@@ -1,0 +1,22 @@
+
+
+
+unsignedMultiply(argX,argY):
+    Add     sp, sp, -16 // Setup stack
+    Store   sp + 0, ra
+
+    Ldi     x5, 0       // Acc
+    Ldi     x6, 1       // Bitmask
+    loop:
+    And     x7, x3, x6  // Grab lowest bit
+    BrEq    x7, x0      // If not zero then add argY to Acc
+    Add     x5, x5, x4
+    RShft   x3, x3      // Shift to next argX bit
+    LShft   x4, x4      // Multiply argY by 2
+    BrEq    x3, x0      // If argX not zero then loop
+    Jmp     loop
+    Add     x3, x0, x5  // Move Acc to Func return
+
+    Load    ra, sp + 0  // Drop stack
+    Add     sp, sp, 16
+    Ret                 // Return to caller
