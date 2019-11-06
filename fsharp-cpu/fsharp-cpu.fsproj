@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>fsharp_cpu</RootNamespace>
+        <OutputType>Exe</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="domain.fs" />
+        <Compile Include="execution.fs" />
+        <Compile Include="program.fs" />
+    </ItemGroup>
+
+</Project>
