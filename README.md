@@ -3,12 +3,13 @@
 Project to create a cpu across multiple pcbs.
 
 
-
 ## Thoughts
 * Risc-v inspired
 * 16bit
-* 
 
+
+## Useful links
+https://rv8.io/isa.html
 
 
 ## Instructions
@@ -33,7 +34,7 @@ Project to create a cpu across multiple pcbs.
 Load Imm            Imm-----------------Rd----Opcode
 ALU                 Ra----Rb----  Func--Rd----Opcode
 Mem                 Ra----Rofset        Rd----Opcode
-Branch              Ra----              Rd----Opcode
+Branch              Ra----Rofset        Rd----Opcode
 Jump                Imm-----------------Rd----Opcode
 Jump Offset         Imm-----------------Rd----Opcode
 Jump Reg            Ra----              Rd----Opcode

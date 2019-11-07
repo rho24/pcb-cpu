@@ -15,28 +15,44 @@ let executeAlu aluFunc a b =
     | Compare   -> if a = b then 0s elif a < b then -1s else 1s
 
 let executeInstruction instruction state =
-    let incrementedState = {state with pc = state.pc + 2us}
+    let {pc = pc; registers = registers; memory = memory} = state
+    let incrementedState = {state with pc = pc + 2us}
     match instruction with
-    | LoadImm i -> {incrementedState with registers = writeReg i.dReg i.immediate state.registers}
-    | Alu i ->
-        let a = readReg i.aReg state.registers
-        let b = readReg i.bReg state.registers
-        let result = executeAlu i.aluFunc a b
-        {incrementedState with registers = writeReg i.dReg result state.registers}
-    | LoadMem i ->
-        let value = readMem i.memAddr state.memory
-        {incrementedState with registers = writeReg i.dReg value state.registers }
-    | StoreMem i ->
-        let value = readReg i.dReg state.registers
-        {incrementedState with memory = writeMem i.memAddr value state.memory }
-//    | BranchEqual of {| dReg:RegAddr; immediate:int16 |}
-//    | BranchNotEqual of {| dReg:RegAddr; immediate:int16 |}
-//    | Jump of {| memAddr:MemAddr |}
-//    | JumpOffset of {| immediate:int16 |}
-//    | JumpAndLink of {| memAddr:MemAddr |}
-//    | JumpAndLinkOffset of {| immediate:int16 |}
-    
-    | _ -> {state with halted = true}
+    | LoadImm {dReg=dReg;immediate=immediate} -> {incrementedState with registers = writeReg dReg immediate registers}
+    | Alu {aluFunc = aluFunc; dReg = dReg; aReg = aReg; bReg = bReg} ->
+        let a = readReg aReg registers
+        let b = readReg bReg registers
+        let result = executeAlu aluFunc a b
+        {incrementedState with registers = writeReg dReg result registers}
+    | LoadMem {dReg = dReg; memAddr = memAddr} ->
+        let value = readMem memAddr memory
+        {incrementedState with registers = writeReg dReg value registers }
+    | StoreMem {dReg = dReg; memAddr = memAddr} ->
+        let value = readReg dReg registers
+        {incrementedState with memory = writeMem memAddr value memory }
+    | BranchEqual {aReg = aReg; bReg = dReg; offset = offset} ->
+        let a = readReg aReg registers
+        let b = readReg dReg registers
+        let offsetPc = pc |> int16 |> ((+) offset) |> uint16
+        if a = b then {state with pc = offsetPc } else incrementedState
+    | BranchNotEqual {aReg = aReg; bReg = dReg; offset = offset} ->
+        let a = readReg aReg registers
+        let b = readReg dReg registers
+        let offsetPc = pc |> int16 |> ((+) offset) |> uint16
+        if a <> b then {state with pc = offsetPc } else incrementedState
+    | Jump {memAddr = memAddr} ->
+        let (MemAddr value) = memAddr
+        {state with pc = value}
+    | JumpOffset {offset = offset} ->
+        let offsetPc = pc |> int16 |> ((+) offset) |> uint16
+        {state with pc = offsetPc}
+    | JumpAndLink {memAddr = memAddr} ->
+        let (MemAddr value) = memAddr
+        {state with pc = value; registers = writeReg X1 (int16 pc) registers}
+    | JumpAndLinkOffset {offset = offset} ->
+        let offsetPc = pc |> int16 |> ((+) offset) |> uint16
+        {state with pc = offsetPc; registers = writeReg X1 (int16 pc) registers}
+    | Unknown | Halt -> {state with halted = true}
 
 let simpleExecuteTick program state =
     let instruction = Map.tryFind state.pc program |> Option.defaultValue Unknown

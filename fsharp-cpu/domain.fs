@@ -30,18 +30,27 @@ type AluFunc =
     | ShiftR
     | Compare
 
+module instructions =
+    type ImmInst = { dReg:RegAddr; immediate:int16 }
+    type Alu = { aluFunc:AluFunc; aReg:RegAddr; bReg:RegAddr; dReg:RegAddr }
+    type Mem = { dReg:RegAddr; memAddr:MemAddr }
+    type Branch = { aReg:RegAddr; bReg:RegAddr; offset:int16 }
+    type Jump = { memAddr:MemAddr }
+    type JumpOffset = { offset:int16 }
+
 type Instruction =
     | Unknown
-    | LoadImm of {| dReg:RegAddr; immediate:int16 |}
-    | Alu of {| aluFunc:AluFunc; aReg:RegAddr; bReg:RegAddr; dReg:RegAddr |}
-    | LoadMem of {| dReg:RegAddr; memAddr:MemAddr |}
-    | StoreMem of {| dReg:RegAddr; memAddr:MemAddr |}
-    | BranchEqual of {| dReg:RegAddr; immediate:int16 |}
-    | BranchNotEqual of {| dReg:RegAddr; immediate:int16 |}
-    | Jump of {| memAddr:MemAddr |}
-    | JumpOffset of {| immediate:int16 |}
-    | JumpAndLink of {| memAddr:MemAddr |}
-    | JumpAndLinkOffset of {| immediate:int16 |}
+    | Halt
+    | LoadImm of instructions.ImmInst
+    | Alu of instructions.Alu
+    | LoadMem of instructions.Mem
+    | StoreMem of instructions.Mem
+    | BranchEqual of instructions.Branch
+    | BranchNotEqual of instructions.Branch
+    | Jump of instructions.Jump
+    | JumpOffset of instructions.JumpOffset
+    | JumpAndLink of instructions.Jump
+    | JumpAndLinkOffset of instructions.JumpOffset
     
 type State = {
     registers: Map<RegAddr,int16>

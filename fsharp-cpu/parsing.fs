@@ -28,11 +28,12 @@ let parseInstruction instructionHalf1 instructionHalf2 =
         
     let opcode = instructionHalf1 &&& (int16 0b11111) |> int
     match opcode with
-    | 0b00001 -> LoadImm {|dReg = getRd instructionHalf1; immediate = instructionHalf2|}
+    | 0b00001 -> LoadImm {dReg = getRd instructionHalf1; immediate = instructionHalf2}
     | _  -> Unknown
 
 let loadInstruction state =
-    let instructionHalf1 = Map.tryFind (MemAddr state.pc) state.memory |> Option.defaultValue 0s
-    let instructionHalf2 = Map.tryFind (MemAddr (state.pc + 1us)) state.memory |> Option.defaultValue 0s
+    let {pc = pc; memory = memory} = state
+    let instructionHalf1 = Map.tryFind (MemAddr pc) memory |> Option.defaultValue 0s
+    let instructionHalf2 = Map.tryFind (MemAddr (pc + 1us)) memory |> Option.defaultValue 0s
     let instruction = parseInstruction instructionHalf1 instructionHalf2
     instruction
