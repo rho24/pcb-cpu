@@ -47,6 +47,7 @@ type State = {
     registers: Map<RegAddr,int16>
     memory: Map<MemAddr,int16>
     pc: uint16
+    halted: bool
 }
 
 let createState (program: int16 list) =
@@ -54,4 +55,5 @@ let createState (program: int16 list) =
         registers = [X0, 0s; X1, 0s; X2, 0s] |> Map.ofList
         memory = program |> List.mapi (fun i s -> MemAddr (uint16 i), s) |> Map.ofList
         pc = 0us
+        halted = false
     }
