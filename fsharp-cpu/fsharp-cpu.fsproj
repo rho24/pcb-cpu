@@ -11,6 +11,7 @@
         <Compile Include="io.fs" />
         <Compile Include="parsing.fs" />
         <Compile Include="execution.fs" />
+        <Compile Include="linker.fs" />
         <Compile Include="program.fs" />
     </ItemGroup>
 

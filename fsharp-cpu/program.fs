@@ -1,5 +1,10 @@
 ﻿module fsharp_cpu.program
 
+open System.IO
+open System.Text
+open System.Text
+open System.Text
+open System.Text.Unicode
 open domain
 open execution
 
@@ -15,6 +20,18 @@ let printState state =
 
 [<EntryPoint>]
 let main args =
+    let p = """
+   # comment
+   add
+   add 1
+   add 1, 2, 3
+"""
+    let l = p |> Encoding.UTF8.GetBytes
+              |> fun b -> new MemoryStream(b)
+              |> linker.compileAndLink
+    
+    printfn "%A" l
+    
     let initialState = createState []
 
     let program = Map.ofList [
@@ -29,5 +46,5 @@ let main args =
 
     let finalState = simpleRunToHalted program initialState
 
-    printState finalState |> ignore
+//    printState finalState |> ignore
     0
