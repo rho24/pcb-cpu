@@ -37,3 +37,28 @@ Branch              Ra----              Rd----Opcode
 Jump                Imm-----------------Rd----Opcode
 Jump Offset         Imm-----------------Rd----Opcode
 Jump Reg            Ra----              Rd----Opcode
+
+
+## Signals
+Ra      16
+Rb      16
+Rd      16
+Raa     5
+Rba     5
+Rda     5
+Rare    1
+Rbre    1
+Rdwr    1
+        66
+
+Busd    16
+Busa    16
+Busre   1
+Buswr   1
+        34
+
+Aluoe   1
+Alufunc 4
+        5
+
+        105
