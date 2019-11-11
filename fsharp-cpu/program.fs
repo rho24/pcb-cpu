@@ -22,9 +22,9 @@ let printState state =
 let main args =
     let p = """
    # comment
-   add
-   add 1
-   add 1, 2, 3
+:program2
+   add x2, x1, x1
+   jump program2
 """
     let l = p |> Encoding.UTF8.GetBytes
               |> fun b -> new MemoryStream(b)
