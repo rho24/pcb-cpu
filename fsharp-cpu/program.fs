@@ -21,14 +21,20 @@ let printState state =
 [<EntryPoint>]
 let main args =
     let p = """
-   # comment
-:program2
-   add x2, x1, x1
-   jump program2
+    # comment
+    load x1, 2
+    load x2, 0
+    load x3, 32
+:loop
+    add x2, x2, x1 # adding 2
+    brancheq x2, x3, 4
+    jump loop
+    halt
 """
     let l = p |> Encoding.UTF8.GetBytes
               |> fun b -> new MemoryStream(b)
               |> linker.compileAndLink
+              |> Map.ofList
     
     printfn "%A" l
     
@@ -44,7 +50,8 @@ let main args =
         0x0cus, Halt
     ]
 
-    let finalState = simpleRunToHalted program initialState
+//    let finalState = simpleRunToHalted program initialState
+    let finalState = simpleRunToHalted l initialState
 
-//    printState finalState |> ignore
+    printState finalState |> ignore
     0

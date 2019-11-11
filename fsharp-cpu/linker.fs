@@ -73,7 +73,10 @@ let mapMemAddr labels arg =
 let mapToInstruction labels (addr,inst) =
     match inst with
     | Op3 ("add",a1,a2,a3) -> addr,Alu {aluFunc=Add; dReg=mapReg a1; aReg=mapReg  a2; bReg=mapReg  a3;} 
+    | Op2 ("load",a1,a2)   -> addr,LoadImm {dReg=mapReg a1; immediate=Int16.Parse(a2)} 
+    | Op3 ("brancheq",a1,a2,a3)   -> addr,BranchEqual {aReg=mapReg a1; bReg=mapReg a2;offset=Int16.Parse(a3)} 
     | Op1 ("jump",a1)      -> addr,Jump {memAddr=mapMemAddr labels a1}
+    | Op0 ("halt")         -> addr,Halt
     | _                    -> addr,Unknown
 
 let compileAndLink (program:Stream) =
