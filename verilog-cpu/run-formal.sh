@@ -1,0 +1,1 @@
+sby -d .sby -f registers.sby

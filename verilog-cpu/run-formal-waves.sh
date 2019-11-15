@@ -1,0 +1,1 @@
+gtkwave .sby/engine_0/trace.vcd

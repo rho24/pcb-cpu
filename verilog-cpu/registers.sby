@@ -1,0 +1,14 @@
+[options]
+mode bmc
+depth 10
+
+[engines]
+smtbmc z3
+
+[script]
+read -formal registers_formal_tb.sv
+prep -top top
+
+[files]
+registers_formal_tb.sv
+registers.sv

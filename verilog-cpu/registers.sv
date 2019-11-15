@@ -12,14 +12,20 @@ module registers(
 
 reg [15:0] r [31:0];
 initial begin
-    r[0] = 0;
+    r[0] <= 0;
 end
 
+integer i;
 always @(posedge regWeD) begin
-    if (regAddrD != 0) r[regAddrD] <= busD;   
+    for (i=0;i<16;i=i+1) begin
+        if (i == 0) r[i] <= 0;
+        else if (i == regAddrD) r[i] <= busD;
+        else r[i] <= r[i];
+    end
 end
 
-assign busA = (regReA) ? r[regAddrA] : 16'hzzzz;
-assign busB = (regReB) ? r[regAddrB] : 16'hzzzz;
-
+always @(*) begin
+    busA <= (regReA) ? r[regAddrA] : 16'hzzzz;
+    busB <= (regReB) ? r[regAddrB] : 16'hzzzz;
+end
 endmodule // registers
