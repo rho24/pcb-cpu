@@ -9,7 +9,8 @@ Project to create a cpu across multiple pcbs.
 
 
 ## Useful links
-https://rv8.io/isa.html
+* https://rv8.io/isa.html
+* https://www.mouser.co.uk/datasheet/2/302/PCA9698-1127696.pdf
 
 
 ## Instructions
