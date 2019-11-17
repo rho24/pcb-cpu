@@ -1,2 +1,3 @@
 # commands
-iverilog -g2012 -o out/registers_tb.vvp registers_tb.v; vvp out/registers_tb.vvp
+iverilog -g2012 -o out/registers_tb.vvp registers_tb.sv; vvp out/registers_tb.vvp
+iverilog -g2012 -o out/memory_tb.vvp memory_tb.sv; vvp out/memory_tb.vvp

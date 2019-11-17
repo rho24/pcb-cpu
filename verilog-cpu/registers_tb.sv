@@ -26,20 +26,27 @@ registers registers(
 );
 
 initial begin
-    $dumpfile("test.vcd");
+    $dumpfile("out/test.vcd");
     $dumpvars(0, top);
 
-    regAddrA = 0;
-    regReA = 1;
+    regAddrA = 0; regAddrB = 3; regAddrD = 0;
+    busD = 0;
+    regReA = 1; regReB = 0; regWeD = 0;
+
     #10
-    regAddrD = 3;
     busD = 313;
     #1
     regWeD = 1;
     #1
     regWeD = 0;
     #10
-    regAddrA = 3;
+    regAddrD = 3;
+    #1
+    regWeD = 1;
+    regAddrB = 3;
+    regReB = 1;
+    #1
+    regWeD = 0;
     #10
     regReA = 0;
 end

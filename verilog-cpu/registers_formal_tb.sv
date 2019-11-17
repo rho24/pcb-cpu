@@ -1,17 +1,17 @@
 
 `include "registers.sv"
 
-module top;
-
-reg  [ 4:0] regAddrA;
-reg  [ 4:0] regAddrB;
-reg  [ 4:0] regAddrD;
-reg         regReA;
-reg         regReB;
-reg         regWeD;
-wire [15:0] busA;
-wire [15:0] busB;
-reg  [15:0] busD;
+module top (
+    input  [ 4:0] regAddrA,
+    input  [ 4:0] regAddrB,
+    input  [ 4:0] regAddrD,
+    input         regReA,
+    input         regReB,
+    input         regWeD,
+    output [15:0] busA,
+    output [15:0] busB,
+    input  [15:0] busD
+);
 
 registers registers(
     .regAddrA(regAddrA),

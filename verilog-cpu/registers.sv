@@ -10,17 +10,14 @@ module registers(
     input  [15:0] busD
 );
 
-reg [15:0] r [31:0];
+reg [15:0] r [5:0];
 initial begin
     r[0] <= 0;
 end
 
-integer i;
 always @(posedge regWeD) begin
-    for (i=0;i<16;i=i+1) begin
-        if (i == 0) r[i] <= 0;
-        else if (i == regAddrD) r[i] <= busD;
-        else r[i] <= r[i];
+    if (regAddrD != 0) begin
+        r[regAddrD] <= busD;
     end
 end
 
