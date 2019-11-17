@@ -1,0 +1,3 @@
+
+`define OPCODE_ALU  7'b0110011
+`define OPCODE_LOAD 7'b0000011

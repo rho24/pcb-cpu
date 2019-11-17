@@ -7,7 +7,7 @@ module memory (
 );
 parameter initialMemHex = "";
 
-reg [7:0] mem [15:0];
+reg [7:0] mem [0:65535];
 
 initial begin
     if (initialMemHex != "") begin

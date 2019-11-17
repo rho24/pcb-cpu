@@ -11,19 +11,23 @@ module cpu (
     output [15:0] busB,
     output [15:0] busD,
     output        clkHold,
+    output [ 3:0] aluFunc,
+    output        aluEn,
     output        memRe,
     output        memWe,
-    output        regARe,
-    output        regBRe,
-    output        regDWe,
+    output        regReA,
+    output        regReB,
+    output        regWeD,
     output [15:0] memAddr,
-    output [ 3:0] regAddrA,
-    output [ 3:0] regAddrB,
-    output [ 3:0] regAddrD
+    output [ 4:0] regAddrA,
+    output [ 4:0] regAddrB,
+    output [ 4:0] regAddrD
 );
 parameter initialMemHex = "";
 
 control control (.*);
+alu alu (.*);
+registers registers (.*);
 
 memory #(initialMemHex) memory (
     .memAddr,
