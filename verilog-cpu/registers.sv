@@ -24,8 +24,7 @@ always @(posedge regWeD) begin
     end
 end
 
-always @(*) begin
-    busA <= (regReA) ? r[regAddrA] : 16'hzzzz;
-    busB <= (regReB) ? r[regAddrB] : 16'hzzzz;
-end
+assign busA = (regReA) ? r[regAddrA] : 16'hzzzz;
+assign busB = (regReB) ? r[regAddrB] : 16'hzzzz;
+
 endmodule // registers
