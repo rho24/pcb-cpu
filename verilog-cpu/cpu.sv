@@ -23,13 +23,14 @@ module cpu (
     output [ 4:0] regAddrB,
     output [ 4:0] regAddrD
 );
-parameter initialMemHex = "";
+parameter initialMemPath = "";
+parameter isHex = 0;
 
 control control (.*);
 alu alu (.*);
 registers registers (.*);
 
-memory #(initialMemHex) memory (
+memory #(initialMemPath, isHex) memory (
     .memAddr,
     .memRe,
     .memWe,

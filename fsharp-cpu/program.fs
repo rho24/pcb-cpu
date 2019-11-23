@@ -54,4 +54,9 @@ let main args =
     let finalState = simpleRunToHalted l initialState
 
     printState finalState |> ignore
+    
+    let binary = linker.assemble l
+    
+    File.WriteAllBytes ("program.mem", binary) |> ignore 
+    
     0

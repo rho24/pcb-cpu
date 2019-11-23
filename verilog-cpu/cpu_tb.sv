@@ -6,7 +6,8 @@ module top;
 reg clk;
 reg rst;
 
-cpu #("cpu_tb.mem") sut (.clk, .rst);
+// cpu #("cpu_tb.mem") sut (.clk, .rst);
+cpu #("../fsharp-cpu/bin/Debug/netcoreapp3.0/program.mem", 0) sut (.clk, .rst);
 
 
 initial begin
