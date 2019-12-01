@@ -9,5 +9,5 @@ sudo pip install pyftdi
 # first run
 ```
 export BLINKA_FT232H=1
-python3 first-test.py
+python3 blink-c0.py
 ```
