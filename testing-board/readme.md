@@ -1,5 +1,5 @@
 
-* https://learn.adafruit.com/circuitpython-on-any-computer-with-ft232h/gpio
+* https://learn.adafruit.com/circuitpython-on-any-computer-with-ft232h/i2c
 * https://www.mouser.co.uk/datasheet/2/302/PCA9698-1127696.pdf
 
 # Setup
